@@ -10,4 +10,5 @@ int main() {
         console_clear(BACKGROUND_RED);
         console_flip();
     }
+    return 0;
 }

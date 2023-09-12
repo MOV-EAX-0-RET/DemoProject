@@ -9,6 +9,6 @@ int main() {
     while (true) {
         console_clear(BACKGROUND_RED);
         console_flip();
+        return 0;
     }
-    return 0;
 }

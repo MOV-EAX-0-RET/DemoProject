@@ -18,7 +18,8 @@ int main() {
     while (true) {
         console_clear();
         console_rect(button.x, button.y, 20, 3, ' ', button.color);
-        console_text(button.text, button.x + 1, button.y + 1, button.color | FOREGROUND_WHITE);
+        console_text(button.text, button.x + 1, button.y + 1, 
+                     button.color | FOREGROUND_WHITE);
         console_flip();
     }
     return 0;

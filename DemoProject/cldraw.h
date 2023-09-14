@@ -127,6 +127,21 @@ bool console_just_pressed(int code) {
 	}
 }
 
+void console_hline(int start_x, int start_y, int length,
+	char c, int attrs = 0xF) {
+	for (int x = start_x; x < start_x + length; x++) {
+		console_pixel(x, start_y, c, attrs);
+	}
+}
+
+void console_rect(int start_x, int start_y,
+	int w, int h,
+	char c, int attrs = 0xF) {
+	for (int y = start_y; y < start_y + h; y++) {
+		console_hline(start_x, y, w, c, attrs);
+	}
+}
+
 class Console {
 public:
 	void create() {

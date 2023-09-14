@@ -3,6 +3,7 @@
 
 #include <windows.h> 
 #include <stdio.h>
+#include <string>
 
 #define WIDTH 120
 #define HEIGHT 30
@@ -18,6 +19,8 @@ COORD coordBufCoord;
 BOOL fSuccess;
 HANDLE curScreenBufferHandle;
 float console_timer = 0.0;
+
+#define FOREGROUND_WHITE 0x00F
 
 int create_console(const wchar_t title[] = L"CL-Draw Window v.1") {
 	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -110,6 +113,10 @@ void console_text(const char* text, int x, int y, int attrs = 0xF) {
 		char c = text[i];
 		console_pixel(x + i, y, c, attrs);
 	}
+}
+
+void console_text(std::string text, int x, int y, int attrs = 0xF) {
+	console_text(text.c_str(), x, y, attrs);
 }
 
 bool pressed[1000]{};

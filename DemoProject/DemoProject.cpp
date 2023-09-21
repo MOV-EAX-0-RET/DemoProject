@@ -53,9 +53,8 @@ void action_exit() {
 
 int main() {
     Menu menu;
-    menu.buttons.push_back(Button{ 3, 3, 20, "Start", BACKGROUND_RED });
-    menu.buttons.push_back(Button{ 3, 7, 20, "Middle", BACKGROUND_RED });
-    menu.buttons.push_back(Button{3, 11, 20,"Exit", BACKGROUND_GREEN, action_exit });
+    menu.buttons.push_back(Button{ 3, 3, 20, "Start", BACKGROUND_GREEN });
+    menu.buttons.push_back(Button{ 3, 7, 20, "Exit", BACKGROUND_RED, action_exit });
 
     create_console();
     while (true) {
@@ -67,6 +66,15 @@ int main() {
         }
         Button& selectedButton = menu.buttons[menu.selected];
         console_pixel(selectedButton.x - 2, selectedButton.y+1, '>');
+
+
+        for (int x = 40; x < 110; x++) {
+            for (int y = 2; y < 26; y++) {
+                srand(x * 37 + y - console_timer * 45);
+                int z = rand() + rand();
+                console_pixel(x, y, ' '+(rand() % 60), FOREGROUND_GREEN);
+            }
+        }
 
         console_flip();
     }

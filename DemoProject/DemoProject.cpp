@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <functional>
 #include "cldraw.h"
@@ -59,19 +60,38 @@ struct Obstacle {
 
 struct Player {
     int score;
+    int highScore;
     int x;
     float y;
     float velocity;
 };
+// Сохранить счёт
+void save_high_score(int score, int highScore) {
+    if (score > highScore) {
+        ofstream file("highscore.txt");
+        file << score << endl;
+        file.close();
+    }
+}
+// Загрузить высший счёт
+int load_high_score() {
+    ifstream file("highscore.txt");
+    int score;
+    file >> score;
+    file.close();
+    return score;
+}
 
 void flight() {
     vector<Obstacle> obstacles;
-    for (int i = 0; i < 3; i++) {
-        Obstacle obs {i * 40, 8, 5 + rand() % 8};
+    int count = 3;
+    for (int i = 0; i < count; i++) {
+        Obstacle obs {i * WIDTH/count, 8, 5 + rand() % 8};
         obstacles.push_back(obs);
     }
 
-    Player player{0, 2, 0, 0.0};
+    Player player{0, 0, 2, 0, 0.0};
+    player.highScore = load_high_score();
     float gravity = 0.05;
 
     while (true) {
@@ -100,6 +120,7 @@ void flight() {
             }
             if (obs.x == player.x && 
                 (player.y < obs.height || player.y > obs.height + obs.interval)) {
+                save_high_score(player.score, player.highScore);
                 flight();
                 return;
             }
@@ -107,6 +128,7 @@ void flight() {
             console_rect(obs.x, obs.height+obs.interval, 3, 20, ' ', BACKGROUND_GREEN);
         }
         console_text("Score: " + to_string(player.score), WIDTH-15, 0);
+        console_text("Best Score: " + to_string(player.highScore), WIDTH-18, 1);
         console_flip();
     }
 }
